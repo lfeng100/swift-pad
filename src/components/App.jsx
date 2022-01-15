@@ -3,10 +3,10 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
+import Todo from "./Todo";
 import { v4 as uuidv4 } from "uuid";
 
 function App(){
-
   const [notes, setNotes] = useState([]);
 
   function addNote(note){
@@ -23,8 +23,14 @@ function App(){
     });
   }
 
+  const [showToDo, setShowToDo] = useState(true);
+
+  function toggleTodo(){
+    setShowToDo(!showToDo);
+  }
+
   return (<div>
-    <Header />
+    <Header onToggle={toggleTodo} showToDo={showToDo} />
     <CreateArea onAdd={addNote} />
     {notes.map((theNote, index) => {
       return (
@@ -36,6 +42,8 @@ function App(){
           onDelete={deleteNote} />
       )
     })}
+
+    {showToDo && <Todo />}
     <Footer />
   </div>
   );
